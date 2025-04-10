@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Order System</title>
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --accent-color: #ffaa5a;
+            --dark-color: #2d3436;
+            --light-color: #f9f9f9;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --border-radius: 10px;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: var(--dark-color);
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--accent-color);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            margin-top: 30px;
+        }
+        
+        h3 {
+            color: var(--dark-color);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .menu-category {
+            margin-top: 20px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s;
+        }
+        
+        .menu-item:hover {
+            background-color: rgba(255, 107, 107, 0.05);
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-item span {
+            font-weight: 500;
+        }
+        
+        .price-quantity {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .price {
+            color: var(--primary-color);
+            font-weight: bold;
+            min-width: 70px;
+            text-align: right;
+        }
+        
+        input[type="number"] {
+            width: 60px;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="number"]:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+        
+        .customer-info {
+            margin-top: 30px;
+            background-color: var(--light-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        input[type="text"], 
+        input[type="tel"], 
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus, 
+        input[type="tel"]:focus, 
+        textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+        
+        textarea {
+            min-height: 100px;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 30px auto 0;
+            box-shadow: var(--shadow);
+        }
+        
+        button:hover {
+            background-color: #ff5252;
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .order-summary {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            margin-top: 10px;
+            border-top: 2px solid var(--accent-color);
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .category-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .highlight {
+            background-color: rgba(255, 170, 90, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+        }
+        
+        #confirmOrder {
+            background-color: var(--secondary-color);
+        }
+        
+        #confirmOrder:hover {
+            background-color: #3dbdb5;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 600px) {
+            .menu-item {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .price-quantity {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Food Order System</h1>
+            <p>Delicious meals delivered to your doorstep</p>
+        </header>
+        
+        <div id="orderForm">
+            <h2>Our Menu</h2>
+            
+            <div class="menu-category">
+                <h3>🍞 Starters</h3>
+                <div class="menu-item">
+                    <span>Garlic Bread</span>
+                    <div class="price-quantity">
+                        <span class="price">$3.99</span>
+                        <input type="number" id="item1" min="0" value="0">
+                    </div>
+                </div>
+                <div class="menu-item highlight">
+                    <span>Soup of the Day</span>
+                    <div class="price-quantity">
+                        <span class="price">$4.99</span>
+                        <input type="number" id="item2" min="0" value="0">
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <span>Mozzarella Sticks</span>
+                    <div class="price-quantity">
+                        <span class="price">$5.99</span>
+                        <input type="number" id="item3" min="0" value="0">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>🍽️ Main Courses</h3>
+                <div class="menu-item">
+                    <span>Spaghetti Bolognese</span>
+                    <div class="price-quantity">
+                        <span class="price">$12.99</span>
+                        <input type="number" id="item4" min="0" value="0">
+                    </div>
+                </div>
+                <div class="menu-item highlight">
+                    <span>Grilled Chicken</span>
+                    <div class="price-quantity">
+                        <span class="price">$14.99</span>
+                        <input type="number" id="item5" min="0" value="0">
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <span>Vegetable Curry</span>
+                    <div class="price-quantity">
+                        <span class="price">$11.99</span>
+                        <input type="number" id="item6" min="0" value="0">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>🍰 Desserts</h3>
+                <div class="menu-item highlight">
+                    <span>Chocolate Cake</span>
+                    <div class="price-quantity">
+                        <span class="price">$6.99</span>
+                        <input type="number" id="item7" min="0" value="0">
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <span>Ice Cream</span>
+                    <div class="price-quantity">
+                        <span class="price">$4.99</span>
+                        <input type="number" id="item8" min="0" value="0">
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <span>Fruit Salad</span>
+                    <div class="price-quantity">
+                        <span class="price">$5.99</span>
+                        <input type="number" id="item9" min="0" value="0">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>🥤 Drinks</h3>
+                <div class="menu-item">
+                    <span>Soda</span>
+                    <div class="price-quantity">
+                        <span class="price">$1.99</span>
+                        <input type="number" id="item10" min="0" value="0">
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <span>Coffee</span>
+                    <div class="price-quantity">
+                        <span class="price">$2.99</span>
+                        <input type="number" id="item11" min="0" value="0">
+                    </div>
+                </div>
+                <div class="menu-item highlight">
+                    <span>Fresh Juice</span>
+                    <div class="price-quantity">
+                        <span class="price">$3.99</span>
+                        <input type="number" id="item12" min="0" value="0">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="customer-info">
+                <h3>Customer Information</h3>
+                <div class="form-group">
+                    <label for="customerName">Name:</label>
+                    <input type="text" id="customerName" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Phone:</label>
+                    <input type="tel" id="customerPhone" required placeholder="Enter your phone number">
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Delivery Address:</label>
+                    <textarea id="customerAddress" required placeholder="Enter your complete delivery address"></textarea>
+                </div>
+            </div>
+            
+            <button id="placeOrder">Place Order</button>
+        </div>
+        
+        <div id="orderSummary" class="order-summary hidden">
+            <h2>Order Summary</h2>
+            <div id="summaryItems"></div>
+            <div id="summaryTotal" class="summary-total"></div>
+            <button id="confirmOrder">Confirm & Proceed to Payment</button>
+        </div>
+    </div>
+
+    <script>
+        // Define menu items with prices
+        const menuItems = {
+            item1: { name: "Garlic Bread", price: 3.99 },
+            item2: { name: "Soup of the Day", price: 4.99 },
+            item3: { name: "Mozzarella Sticks", price: 5.99 },
+            item4: { name: "Spaghetti Bolognese", price: 12.99 },
+            item5: { name: "Grilled Chicken", price: 14.99 },
+            item6: { name: "Vegetable Curry", price: 11.99 },
+            item7: { name: "Chocolate Cake", price: 6.99 },
+            item8: { name: "Ice Cream", price: 4.99 },
+            item9: { name: "Fruit Salad", price: 5.99 },
+            item10: { name: "Soda", price: 1.99 },
+            item11: { name: "Coffee", price: 2.99 },
+            item12: { name: "Fresh Juice", price: 3.99 }
+        };
+
+        // Place Order Button Event
+        document.getElementById('placeOrder').addEventListener('click', function() {
+            const customerName = document.getElementById('customerName').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+            const customerAddress = document.getElementById('customerAddress').value;
+            
+            // Validate customer information
+            if (!customerName || !customerPhone || !customerAddress) {
+                alert("Please fill in all customer information fields");
+                return;
+            }
+            
+            let orderItems = [];
+            let totalAmount = 0;
+            
+            // Collect order items
+            for (const [itemId, details] of Object.entries(menuItems)) {
+                const quantity = parseInt(document.getElementById(itemId).value);
+                if (quantity > 0) {
+                    const itemTotal = quantity * details.price;
+                    orderItems.push({
+                        name: details.name,
+                        quantity: quantity,
+                        price: details.price,
+                        total: itemTotal
+                    });
+                    totalAmount += itemTotal;
+                }
+            }
+            
+            // Validate if any items are selected
+            if (orderItems.length === 0) {
+                alert("Please select at least one item");
+                return;
+            }
+            
+            // Display order summary
+            const summaryItemsContainer = document.getElementById('summaryItems');
+            summaryItemsContainer.innerHTML = '';
+            
+            orderItems.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('summary-item');
+                itemElement.innerHTML = `
+                    <span>${item.name} x ${item.quantity}</span>
+                    <span>$${item.total.toFixed(2)}</span>
+                `;
+                summaryItemsContainer.appendChild(itemElement);
+            });
+            
+            document.getElementById('summaryTotal').innerHTML = `
+                <span>Total</span>
+                <span>$${totalAmount.toFixed(2)}</span>
+            `;
+            
+            document.getElementById('orderForm').classList.add('hidden');
+            document.getElementById('orderSummary').classList.remove('hidden');
+            
+            // Store order data to session storage for bill page
+            const orderData = {
+                customer: {
+                    name: customerName,
+                    phone: customerPhone,
+                    address: customerAddress
+                },
+                items: orderItems,
+                total: totalAmount,
+                orderDate: new Date().toLocaleString()
+            };
+            
+            sessionStorage.setItem('orderData', JSON.stringify(orderData));
+        });
+        
+        // Confirm Order Button Event
+        document.getElementById('confirmOrder').addEventListener('click', function() {
+            window.location.href = 'bill.html';
+        });
+    </script>
+</body>
+</html>
